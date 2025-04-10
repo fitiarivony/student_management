@@ -4,13 +4,14 @@ let bodyParser = require('body-parser');
 let student = require('./routes/students');
 let course = require('./routes/courses');
 let grade = require('./routes/grades');
+require('dotenv').config();
 
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 //mongoose.set('debug', true);
 
 // TODO remplacer toute cette chaine par l'URI de connexion à votre propre base dans le cloud
-const uri = '...';
+const uri = process.env.MONGO_URI
 
 const options = {};
 
