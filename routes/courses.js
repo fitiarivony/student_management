@@ -23,4 +23,19 @@ function create(req, res) {
     });
 }
 
-module.exports = {getAll, create};
+function remove(req, res) {
+    const courseId = req.params.id;
+  
+    Course.findByIdAndDelete(courseId)
+      .then((deletedCourse) => {
+        if (!deletedCourse) {
+          return res.status(404).json({ message: 'Course not found!' });
+        }
+        res.json({ message: `Course with id ${courseId} deleted!` });
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+}
+
+module.exports = {getAll, create, remove};
