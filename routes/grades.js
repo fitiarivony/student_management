@@ -30,4 +30,25 @@ function create(req, res) {
     });
 }
 
-module.exports = {getAll, create};
+function update(req, res) {
+    const id = req.params.id;
+    Grade.findByIdAndUpdate(
+      id,
+      {
+        student: req.body.student,
+        course: req.body.course,
+        grade: req.body.grade,
+        date: req.body.date
+      },
+      { new: true }
+    )
+      .populate('student')
+      .populate('course')
+      .then(updatedGrade => {
+        if (!updatedGrade) return res.status(404).json({ message: "Note non trouvée" });
+        res.json({ message: "Note mise à jour", grade: updatedGrade });
+      })
+      .catch(err => res.status(500).json({ error: err.message }));
+  }  
+
+module.exports = {getAll, create, update};
