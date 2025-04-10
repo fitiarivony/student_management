@@ -42,4 +42,26 @@ function create(req, res) {
     });
 }
 
-module.exports = { getAll, create,deleteEtudiant };
+function update(req, res) {
+    const studentId = req.params.id;
+
+    Student.findById(studentId)
+        .then((student) => {
+            if (!student) {
+                return res.status(404).json({ message: "Student not found" });
+            }
+
+            student.firstName = req.body.firstName || student.firstName;
+            student.lastName = req.body.lastName || student.lastName;
+
+            return student.save();
+        })
+        .then((updatedStudent) => {
+            res.json({ message: `Student with id ${updatedStudent.id} updated!` });
+        })
+        .catch((err) => {
+            res.status(500).send('Cannot update student: ' + err);
+        });
+}
+
+module.exports = { getAll, create, update,deleteEtudiant };
