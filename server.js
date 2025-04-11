@@ -42,7 +42,12 @@ const prefix = '/api';
 
 app.route(prefix + '/students')
     .get(student.getAll)
-    .post(student.create);
+    .post(student.create)
+    .delete(student.deleteEtudiant);
+    
+app.route(prefix + '/students/:id')
+    .put(student.update); 
+
 
 app.route(prefix + '/courses')
     .get(course.getAll)
