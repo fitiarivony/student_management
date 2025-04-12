@@ -46,6 +46,10 @@ app.route(prefix + '/students')
     .delete(student.deleteEtudiant);
     
 app.route(prefix + '/students/:id')
+    .get(student.getById); 
+
+
+app.route(prefix + '/students/:id')
     .put(student.update); 
 
 
