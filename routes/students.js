@@ -29,8 +29,7 @@ function getById(req, res) {
 
 async function deleteEtudiant(req, res) {
   try {
-   
-    const deletedStudent = await Student.findByIdAndDelete(req.body.id);
+    const deletedStudent = await Student.findByIdAndDelete(req.params.id);
     console.log(deletedStudent);
     
     if (!deletedStudent) {

@@ -46,21 +46,25 @@ app.route(prefix + '/students')
     .delete(student.deleteEtudiant);
     
 app.route(prefix + '/students/:id')
-    .get(student.getById); 
-
-
-app.route(prefix + '/students/:id')
-    .put(student.update); 
+    .get(student.getById)
+    .put(student.update)
+    .delete(student.deleteEtudiant)
 
 
 app.route(prefix + '/courses')
     .get(course.getAll)
     .post(course.create);
 
+app.route(prefix + '/courses/:id')
+    .put(course.update)
+    .delete(course.deleteCourse)
+
 app.route(prefix + '/grades')
     .get(grade.getAll)
     .post(grade.create);
 
+app.route(prefix + '/grades/:id')
+    .delete(grade.deleteGrade)
 // On démarre le serveur
 app.listen(port, "0.0.0.0");
 console.log('Serveur démarré sur http://localhost:' + port);

@@ -29,5 +29,19 @@ function create(req, res) {
         res.status(400).send('cant post grade ', err.message);
     });
 }
-
-module.exports = {getAll, create};
+async function deleteGrade(req, res) {
+    try {
+      const deletedGrade = await Grade.findByIdAndDelete(req.params.id);
+      
+      if (!deletedGrade) {
+        return res.status(404).json({ message: "Course not found" });
+      }
+      res.status(200).json({
+        message: "Student deleted successfully",
+        courseId: req.params.id,
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Error deleting course", error });
+    }
+  }
+module.exports = {getAll, create,deleteGrade};
