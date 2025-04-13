@@ -1,5 +1,6 @@
 let {Grade, Student, Course} = require('../model/schemas');
-
+const mongoose=require('mongoose')
+const {ObjectId}=mongoose.Types
 function getAll(req, res) {
     Grade.find()
         .populate('student')
@@ -15,11 +16,10 @@ function getNotes(req, res) {
   const id = req.params.id;
   let year = req.query.year;  // Récupérer l'année depuis la query string
   
-  let query = { student: id };  // La requête de base pour l'étudiant
+  let query = { student: new ObjectId(id) };  // La requête de base pour l'étudiant
   if (!year || isNaN(year)) {
     year=(new Date()).getFullYear()
   }
-  console.log(year);
   
   // Si une ann ée est spécifiée, on ajoute un filtre pour l'année
   if (year) {
@@ -29,7 +29,6 @@ function getNotes(req, res) {
     
     query.date = { $gte: startDate, $lt: endDate }; // Filtrer par l'année
   }
- console.log(query);
  
   Grade.find(query)
          .populate('student')
