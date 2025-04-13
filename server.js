@@ -63,13 +63,10 @@ app.route(prefix + '/courses/:id')
 app.route(prefix + '/grades')
     .get(grade.getAll)
     .post(grade.create);
-
-app.route(prefix + '/grades/:id')
-    .put(grade.update)    
-  
-
+    
 app.route(prefix + '/grades/:id')
     .delete(grade.deleteGrade)
+    .put(grade.update);
 
 app.route(prefix + '/grades/student/:id')
     .get(grade.getNotes)
