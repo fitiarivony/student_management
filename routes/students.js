@@ -9,10 +9,27 @@ function getAll(req, res) {
       res.send(err);
     });
 }
+
+function getById(req, res) {
+    const id = req.params.id;
+
+    Student.findById(id)
+        .then((student) => {
+            if (!student) {
+                return res.status(404).send({ message: "Étudiant non trouvé" });
+            }
+            res.send(student);
+        })
+        .catch((err) => {
+            res.status(500).send({ message: "Erreur serveur", error: err });
+        });
+}
+
+
+
 async function deleteEtudiant(req, res) {
   try {
-   
-    const deletedStudent = await Student.findByIdAndDelete(req.body.id);
+    const deletedStudent = await Student.findByIdAndDelete(req.params.id);
     console.log(deletedStudent);
     
     if (!deletedStudent) {
@@ -64,4 +81,4 @@ function update(req, res) {
         });
 }
 
-module.exports = { getAll, create, update,deleteEtudiant };
+module.exports = { getAll, create, update,deleteEtudiant ,getById};
