@@ -11,6 +11,35 @@ function getAll(req, res) {
     });
 }
 
+function getNotes(req, res) {
+  const id = req.params.id;
+  let year = req.query.year;  // Récupérer l'année depuis la query string
+  
+  let query = { student: id };  // La requête de base pour l'étudiant
+  if (!year || isNaN(year)) {
+    year=(new Date()).getFullYear()
+  }
+  console.log(year);
+  
+  // Si une ann ée est spécifiée, on ajoute un filtre pour l'année
+  if (year) {
+    
+    const startDate = new Date(`${year}-01-01`); // Date de début de l'année
+    const endDate = new Date(`${parseInt(year) + 1}-01-01`); // Date de début de l'année suivante
+    
+    query.date = { $gte: startDate, $lt: endDate }; // Filtrer par l'année
+  }
+ console.log(query);
+ 
+  Grade.find(query)
+         .populate('student')
+         .populate('course')
+         .then((grades) => {
+             res.send(grades);
+         }).catch((err) => {
+         res.send(err);
+     });
+}
 
 function create(req, res) {
     let grade = new Grade();
@@ -44,4 +73,4 @@ async function deleteGrade(req, res) {
       res.status(500).json({ message: "Error deleting course", error });
     }
   }
-module.exports = {getAll, create,deleteGrade};
+module.exports = {getAll, create,deleteGrade,getNotes};

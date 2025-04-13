@@ -51,6 +51,7 @@ app.route(prefix + '/students/:id')
     .delete(student.deleteEtudiant)
 
 
+
 app.route(prefix + '/courses')
     .get(course.getAll)
     .post(course.create);
@@ -65,6 +66,9 @@ app.route(prefix + '/grades')
 
 app.route(prefix + '/grades/:id')
     .delete(grade.deleteGrade)
+
+app.route(prefix + '/grades/student/:id')
+    .get(grade.getNotes)
 // On démarre le serveur
 app.listen(port, "0.0.0.0");
 console.log('Serveur démarré sur http://localhost:' + port);
