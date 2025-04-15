@@ -95,4 +95,4 @@ function update(req, res) {
       .catch(err => res.status(500).json({ error: err.message }));
   }  
 
-module.exports = {getAll, create, update};
+module.exports = {getAll, create, update, deleteGrade, getNotes};
